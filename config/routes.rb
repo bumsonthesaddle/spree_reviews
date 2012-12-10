@@ -19,4 +19,9 @@ Spree::Core::Engine.routes.append do
     end
   end
   match "/reviews/:review_id/feedback(.:format)" => "feedback_reviews#create", :via => :post, :as => "feedback_review"
+
+  resources :products do
+    resources :ratings do
+    end
+  end
 end

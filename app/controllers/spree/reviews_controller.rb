@@ -1,4 +1,4 @@
-class Spree::ReviewsController < Spree::BaseController
+class Spree::ReviewsController < Spree::ReviewsBaseController
   helper Spree::BaseHelper
   before_filter :load_product, :only => [:index, :new, :create]
   rescue_from ActiveRecord::RecordNotFound, :with => :render_404
@@ -34,11 +34,4 @@ class Spree::ReviewsController < Spree::BaseController
 
   def terms
   end
-
-  private
-
-  def load_product
-    @product = Spree::Product.find_by_permalink!(params[:product_id])
-  end
-
 end
