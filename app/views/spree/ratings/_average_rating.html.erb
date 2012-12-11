@@ -1,7 +1,5 @@
-<div class="rating">
-<%= render :partial => "spree/reviews/stars", :locals => {:stars => @product.stars} %>
-<p>Product Rating</p>
-<div>
-<% if @product.reviews_count == 0 %>
-  <p class="no-ratings">(Be the first to rate this product)</p>
+<% if @product.reviews_count > 0 %>
+  <div class="rating">
+  <%= render :partial => "spree/reviews/stars", :locals => {:stars => @product.stars} %>
+  <div>
 <%end%>

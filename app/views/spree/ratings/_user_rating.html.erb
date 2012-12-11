@@ -1,7 +1,7 @@
 <div class="rating">
   <% if try_spree_current_user %>
   <% if @rating_review.rating %>
-    <p>Your rating</p>
+    <p>You rated this</p>
   <% else %>
     <p>Rate this product</p>
   <%end%>
@@ -9,6 +9,6 @@
     <%= render :partial => "spree/reviews/stars", :locals => {:stars => @rating_review.rating, :edit_enabled => true} %>
   <% end %>
   <% else %>
-    <p class="login_to_rate"> Please <a href=<%= login_path %>>login</a> to rate</p>
+    <p class="login_to_rate"> Please <a href=<%= login_path %>>login</a> to rate this product.</p>
   <% end %>
 </div>
