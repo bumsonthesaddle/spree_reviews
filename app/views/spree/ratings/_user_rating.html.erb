@@ -1,8 +1,10 @@
-<% if try_spree_current_user %>
-<%= form_for @rating_review, :url => product_ratings_path(@product), :html => {:method => :post} do |f| %>
-  <%= render :partial => "spree/reviews/stars", :locals => {:stars => @rating_review.rating, :edit_enabled => true} %>
-<% end %>
-<p>Your Rating</p>
-<% else %>
-  <p> Please Login To Rate</p>
-<% end %>
+<div class="rating">
+  <% if try_spree_current_user %>
+  <%= form_for @rating_review, :url => product_ratings_path(@product), :html => {:method => :post} do |f| %>
+    <%= render :partial => "spree/reviews/stars", :locals => {:stars => @rating_review.rating, :edit_enabled => true} %>
+  <% end %>
+  <p>Your Rating</p>
+  <% else %>
+    <p> Please Login To Rate</p>
+  <% end %>
+</div>
