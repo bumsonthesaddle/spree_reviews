@@ -8,6 +8,7 @@
   <%= form_for @rating_review, :url => product_ratings_path(@product), :html => {:method => :post} do |f| %>
     <%= render :partial => "spree/reviews/stars", :locals => {:stars => @rating_review.rating, :edit_enabled => true} %>
   <% end %>
+    <p class="write_review"><%= link_to t('write_your_own_review'), new_product_review_path(@product), :rel => "nofollow,noindex" %></p>
   <% else %>
     <p class="login_to_rate"> Please <a href=<%= login_path %>>login</a> to rate this product.</p>
   <% end %>

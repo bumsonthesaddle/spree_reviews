@@ -1,5 +1,8 @@
 <% if product.reviews_count > 0 %>
   <div class="rating">
     <%= render :partial => "spree/reviews/stars", :locals => {:stars => product.stars} %>
+    <% if product.reviews_count > 0 %>
+      <a href="#reviews"><%= product.reviews.not_rating.count %> reviews</a>
+    <% end %>
   </div>
 <%end%>

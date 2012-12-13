@@ -17,7 +17,11 @@ class Spree::Review < ActiveRecord::Base
 
   class << self
     def approved
-      where(:approved => true)
+      if Spree::Reviews::Config[:include_unapproved_reviews]
+        scoped
+      else 
+        where(:approved => true)
+      end
     end
 
     #to remove when we bring in STI for ratings.
