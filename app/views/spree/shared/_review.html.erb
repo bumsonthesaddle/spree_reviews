@@ -10,7 +10,7 @@
   <% if Spree::Reviews::Config[:show_email] && review.user %>
     <span itemprop="author"><%= review.user.email %></span>
   <% else %>
-    <span itemprop="author"><%= review.name %></span>
+    <span itemprop="author">by <%= review.name %></span>
   <% end %>
   <div itemprop="reviewBody">
     <%= simple_format(review.review) %>

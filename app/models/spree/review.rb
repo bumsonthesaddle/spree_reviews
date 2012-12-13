@@ -20,6 +20,11 @@ class Spree::Review < ActiveRecord::Base
       where(:approved => true)
     end
 
+    #to remove when we bring in STI for ratings.
+    def not_rating
+      where(["name <> ?", "BOTS-RATING"])
+    end
+
     def not_approved
       where(:approved => false)
     end

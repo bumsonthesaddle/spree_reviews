@@ -1,27 +1,50 @@
-<%= form_for review, :url => product_reviews_path(product), :html => {:method => :post} do |f| %>
-  <%= render "spree/shared/error_messages", :target => review %>
+<div class="main-container">
+<div class="container addreview">
+  <div class="row">
+    <div class="span8">
+      <h3>Add a Review</h3>
+      <section class="bg">
+        <%= form_for review, :url => product_reviews_path(product), :html => {:method => :post} do |f| %>
+          <%= render "spree/shared/error_messages", :target => review %>
+          <ul class="form-horizontal">
+              <li class="review_rating_field control-group">
+              <%= f.label :rating, :class => 'control-label'%> <span class="required">*</span>
+                <div class="controls">
+                  <%= render :partial => "spree/reviews/stars", :locals => {:stars => review.rating, :edit_enabled => true} %>
+                </div>
+              </li>
 
-  <p class="review_rating_field">
-    <%= f.label :rating %> <span class="required">*</span><br />
-    <%= render :partial => "spree/reviews/stars", :locals => {:stars => review.rating, :edit_enabled => true} %>
-  </p>
+              <li class="review_name_field control-group">
+                <%= f.label :name,:class => 'control-label'%> <span class="required">*</span>
+                <div class="controls">
+                <%= f.text_field :name, :maxlength => "255", :size => "50" %>
+                </div>
+              </li>
 
-  <p class="review_name_field">
-    <%= f.label :name %> <span class="required">*</span><br />
-    <%= f.text_field :name, :maxlength => "255", :size => "50" %>
-  </p>
+              <li class="review_title_field control-group">
+                <%= f.label :title ,:class => 'control-label'%>
+                <div class="controls">
+                <%= f.text_field :title, :maxlength => "255", :size => "50" %>
+                </div>
+              </li>
+              
+              <li class="review_review_field control-group">
+                <%= f.label :review,:class => 'control-label' %> <span class="required">*</span>
+                <div class="controls">
+                <%= f.text_area :review, :wrap => "virtual", :rows => "10", :cols => "50" %>
+                </div>
+              </li>
 
-  <p class="review_title_field">
-    <%= f.label :title %><br />
-    <%= f.text_field :title, :maxlength => "255", :size => "50" %>
-  </p>
-  
-  <p class="review_review_field">
-    <%= f.label :review %> <span class="required">*</span><br />
-    <%= f.text_area :review, :wrap => "virtual", :rows => "10", :cols => "50" %>
-  </p>
-
-  <p class="review_submit">
-    <%= f.submit t(:submit_your_review), :class => "button bg_darkfirst" %>
-  </p>
-<% end %>
+              <li class="review_submit">
+                <div class="controls">
+                  <%= f.submit t(:submit_your_review), :class => "btn btn-main" %>
+                </div>
+              </li>
+          </ul>
+        <% end %>
+      </section>
+    </div>
+   <div class="span4"></div>
+  </div>
+</div>
+</div>
