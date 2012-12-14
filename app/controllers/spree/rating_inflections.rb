@@ -6,7 +6,7 @@ module Spree::RatingInflections
   def initialize_rating
     current_user = try_spree_current_user
     @rating_review = Spree::Review.new if current_user.nil? or @product.nil?
-    @rating_review = @product.reviews.find {|x| x.user == current_user} || Spree::Review.new
+    @rating_review = @product.reviews.find {|x| x.user == current_user and x.name == "BOTS-RATING"} || Spree::Review.new
   end
 end
 

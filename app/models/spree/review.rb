@@ -3,7 +3,7 @@ class Spree::Review < ActiveRecord::Base
   belongs_to :user, :class_name => Spree.user_class.to_s
   has_many   :feedback_reviews
 
-  after_save :recalculate_product_rating, :if => :approved?
+  after_save :recalculate_product_rating
   after_destroy :recalculate_product_rating
 
   validates_presence_of     :name, :review
@@ -52,10 +52,14 @@ class Spree::Review < ActiveRecord::Base
   end
 
   def recalculate_product_rating
-    reviews_count = product.reviews.reload.approved.count
+    scope = product.reviews.reload
+    unless Spree::Reviews::Config[:include_unapproved_reviews]
+      scope = scope.approved
+    end
+    reviews_count = scope.count
 
     if reviews_count > 0
-      product.avg_rating = product.reviews.approved.sum(:rating).to_f / reviews_count
+      product.avg_rating = scope.sum(:rating).to_f / reviews_count
       product.reviews_count = reviews_count
       product.save
     else
