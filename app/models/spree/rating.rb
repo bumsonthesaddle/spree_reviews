@@ -7,7 +7,7 @@ class Spree::Rating
   end
 
   def create
-    @review = Spree::Review.find_by_product_id_and_user_id_and_name(@product.id, @user.id, "BOTS-RATING")
+    @review = @product.reviews.select {|x| x.name == "BOTS-RATING" and x.user == @user}.first
     @review = Spree::Review.new unless @review
     @review.rating = @rating_count
     @review.name = "BOTS-RATING"
