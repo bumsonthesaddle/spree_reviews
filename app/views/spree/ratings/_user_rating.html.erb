@@ -1,12 +1,12 @@
 <div class="rating">
   <% if try_spree_current_user %>
-  <% if @rating_review.rating %>
+  <% if @rating.rating %>
     <p>You rated this</p>
   <% else %>
     <p>Rate this product</p>
   <%end%>
-  <%= form_for @rating_review, :url => product_ratings_path(@product), :html => {:method => :post} do |f| %>
-    <%= render :partial => "spree/reviews/stars", :locals => {:stars => @rating_review.rating, :edit_enabled => true} %>
+  <%= form_for @rating, :url => product_ratings_path(@product), :html => {:method => :post} do |f| %>
+    <%= render :partial => "spree/reviews/stars", :locals => {:stars => @rating.rating, :edit_enabled => true} %>
   <% end %>
     <p class="write_review"><%= link_to t('write_your_own_review'), new_product_review_path(@product), :rel => "nofollow,noindex" %></p>
   <% else %>

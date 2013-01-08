@@ -1,4 +1,6 @@
 class Spree::Review < ActiveRecord::Base
+  include Spree::ProductRatingCalculator
+
   belongs_to :product
   belongs_to :user, :class_name => Spree.user_class.to_s
   has_many   :feedback_reviews
@@ -17,17 +19,13 @@ class Spree::Review < ActiveRecord::Base
 
   class << self
     def approved
-      if Spree::Reviews::Config[:include_unapproved_reviews]
-        scoped
-      else 
-        where(:approved => true)
-      end
+      where(:approved => true)
     end
 
     #to remove when we bring in STI for ratings.
-    def not_rating
-      where(["name <> ?", "BOTS-RATING"])
-    end
+    # def not_rating
+    #   where(["name <> ?", "BOTS-RATING"])
+    # end
 
     def not_approved
       where(:approved => false)
@@ -51,19 +49,19 @@ class Spree::Review < ActiveRecord::Base
     ((feedback_reviews.sum(:rating) / feedback_reviews.size) + 0.5).floor
   end
 
-  def recalculate_product_rating
-    scope = product.reviews.reload
-    unless Spree::Reviews::Config[:include_unapproved_reviews]
-      scope = scope.approved
-    end
-    reviews_count = scope.count
+  # def recalculate_product_rating
+  #   scope = product.reviews.reload
+  #   unless Spree::Reviews::Config[:include_unapproved_reviews]
+  #     scope = scope.approved
+  #   end
+  #   reviews_count = scope.count
 
-    if reviews_count > 0
-      product.avg_rating = scope.sum(:rating).to_f / reviews_count
-      product.reviews_count = reviews_count
-      product.save
-    else
-      product.update_attribute(:avg_rating, 0)
-    end
-  end
+  #   if reviews_count > 0
+  #     product.avg_rating = scope.sum(:rating).to_f / reviews_count
+  #     product.reviews_count = reviews_count
+  #     product.save
+  #   else
+  #     product.update_attribute(:avg_rating, 0)
+  #   end
+  # end
 end

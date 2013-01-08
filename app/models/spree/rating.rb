@@ -1,20 +1,20 @@
-class Spree::Rating
+class Spree::Rating < ActiveRecord::Base
+  include Spree::ProductRatingCalculator
+  #move this and review common code to a module
+  belongs_to :user
+  belongs_to :product
+  after_save :recalculate_product_rating
+  after_destroy :recalculate_product_rating
+  validates_numericality_of :rating, :only_integer => true
 
-  def initialize rating_count, product,user
-    @rating_count = rating_count
-    @product = product
-    @user = user
-  end
+  attr_protected :user_id,:product_id, :rating
 
-  def create
-    @review = @product.reviews.select {|x| x.name == "BOTS-RATING" and x.user == @user}.first
-    @review = Spree::Review.new unless @review
-    @review.rating = @rating_count
-    @review.name = "BOTS-RATING"
-    @review.review = "BOTS-RATING"
-    @review.approved = true
-    @review.product = @product
-    @review.user = @user
-    @review.save
+  def self.create_using count, product, user
+    rating = product.ratings.select {|x| x.user == user}.first
+    rating = self.new unless rating
+    rating.rating = count
+    rating.user = user
+    rating.product = product
+    rating.save
   end
 end

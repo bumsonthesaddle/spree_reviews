@@ -15,7 +15,7 @@ module Spree::ReviewsHelper
   end
 
   def text_for_review_count reviews
-    count = reviews.not_rating.count
+    count = reviews.count
     return "1 review" if count == 1
     "#{count} reviews"
   end
