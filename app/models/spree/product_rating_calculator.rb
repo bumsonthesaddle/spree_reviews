@@ -5,7 +5,6 @@ module Spree::ProductRatingCalculator
       scope = scope.approved
     end
     reviews_count = scope.count
-    # reviews_count = product.reviews.reload.approved.count
     ratings_count = product.ratings.reload.count
 
     if reviews_count == 0 and ratings_count == 0

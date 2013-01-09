@@ -22,11 +22,6 @@ class Spree::Review < ActiveRecord::Base
       where(:approved => true)
     end
 
-    #to remove when we bring in STI for ratings.
-    # def not_rating
-    #   where(["name <> ?", "BOTS-RATING"])
-    # end
-
     def not_approved
       where(:approved => false)
     end
@@ -48,20 +43,4 @@ class Spree::Review < ActiveRecord::Base
     return 0 if feedback_reviews.size <= 0
     ((feedback_reviews.sum(:rating) / feedback_reviews.size) + 0.5).floor
   end
-
-  # def recalculate_product_rating
-  #   scope = product.reviews.reload
-  #   unless Spree::Reviews::Config[:include_unapproved_reviews]
-  #     scope = scope.approved
-  #   end
-  #   reviews_count = scope.count
-
-  #   if reviews_count > 0
-  #     product.avg_rating = scope.sum(:rating).to_f / reviews_count
-  #     product.reviews_count = reviews_count
-  #     product.save
-  #   else
-  #     product.update_attribute(:avg_rating, 0)
-  #   end
-  # end
 end
